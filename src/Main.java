@@ -10,6 +10,9 @@ public class Main {
         //System.out.println(digitalClock);
         System.out.println(digitalClock.toString());
 
+        City city = new City("Warsaw", 2, "123 e", "123 e");
+        City upgradedCity = city.parseLine(4);
+        System.out.println(upgradedCity);
     }
 
 
