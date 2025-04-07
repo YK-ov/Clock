@@ -4,6 +4,7 @@ public abstract class Clock {
     protected int seconds;
     protected int hours;
     protected int minutes;
+    private City city;
 
     public void setCurrentTime(){
         LocalTime now = LocalTime.now();
