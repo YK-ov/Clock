@@ -4,7 +4,7 @@ public class DigitalClock extends Clock {
     public DigitalClock(City city, int timeFormat) {
         super(city);
         if (timeFormat == 12 || timeFormat == 24) {
-            this.timeFormat = timeFormat; //cases for 12,24 or not + add city from clock as constructor, clock class: setTime depending on city by the summerTime zone
+            this.timeFormat = timeFormat;
         }
         else{
             throw new IllegalArgumentException("Format godzin musi byc 12 lub 24");
