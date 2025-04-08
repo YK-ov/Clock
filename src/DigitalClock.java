@@ -2,7 +2,7 @@ public class DigitalClock extends Clock {
     private final int timeFormat;
 
     public DigitalClock(int timeFormat) {
-        this.timeFormat = timeFormat;
+        this.timeFormat = timeFormat; //cases for 12,24 or not + add city from clock as constructor, clock class: setTime depending on city by the summerTime zone
     }
 
     public int changeFormat() {
