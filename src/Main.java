@@ -34,9 +34,6 @@ public class Main {
         System.out.println(digitalClock);
         digitalClock.setCity(Kyiv);
         System.out.println(digitalClock);
-
     }
-
-
 
 }
