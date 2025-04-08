@@ -6,6 +6,10 @@ public abstract class Clock {
     protected int minutes;
     private City city;
 
+    public Clock(City city) {
+        this.city = city;
+    }
+
     public void setCurrentTime(){
         LocalTime now = LocalTime.now();
         this.hours = now.getHour();
@@ -23,6 +27,25 @@ public abstract class Clock {
             throw new IllegalArgumentException("Godzina musi ustawiona byc wedlug 24-godzinnego formatu");
         }
     }
+
+    public void setCity(City newCity) {
+        int summerTimeDifference = newCity.getSummerTime() - city.getSummerTime();
+        System.out.println(summerTimeDifference);
+        System.out.println(newCity.getSummerTime());
+        System.out.println(city.getSummerTime());
+        this.hours = this.hours + summerTimeDifference;
+
+        if (this.hours > 23) {
+            this.hours = this.hours - 24;
+        }
+        else if (this.hours < 0) {
+            this.hours = this.hours + 24;
+        }
+        this.city = newCity;
+    }
+
+
+
 
     @Override
     public String toString() {
