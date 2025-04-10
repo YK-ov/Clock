@@ -30,10 +30,17 @@ public class Main {
         DigitalClock digitalClock = new DigitalClock(Warsaw, 24);
 
         City Kyiv = new City("Kijów",3,"50.4501 N", "30.5234 E");
-        digitalClock.setCurrentTime();
+        digitalClock.setTime(0 , 0, 0);
         System.out.println(digitalClock);
-        digitalClock.setCity(Kyiv);
-        System.out.println(digitalClock);
+        City Lublin = new City("Lublin",2,"51.2465 N", "22.5684 E");
+        //digitalClock.setCity(Kyiv);
+        //System.out.println(digitalClock);
+        System.out.println("method below:");
+        System.out.println(Lublin.localMeanTime(12, 0, 0));
+
+        City Tokyo = new City("Tokyo", 9, "35.6895 N", "139.6917 E");
+        System.out.println(Tokyo.localMeanTime(12, 0, 0));
+
     }
 
 }

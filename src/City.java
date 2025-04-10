@@ -9,10 +9,13 @@ public class City {
     private String capital;
     private int summerTime;
     private String latitude;
+
     private String longitude;
 
     private double latitudeValue;
     private double longtitudeValue;
+    private char latitudeDirection;
+    private char longtitudeDirection;
 
     public City(String capital, int summerTime, String latitude, String longitude) {
         this.capital = capital;
@@ -25,6 +28,8 @@ public class City {
 
         this.latitudeValue = Double.parseDouble(this.latitude.replaceAll(regex, replacement));
         this.longtitudeValue = Double.parseDouble(this.longitude.replaceAll(regex, replacement));
+        this.latitudeDirection = this.latitude.charAt(this.latitude.length() - 1);
+        this.longtitudeDirection = this.longitude.charAt(this.longitude.length() - 1);
     }
 
     public City parseLine(String line) {
@@ -80,6 +85,75 @@ public class City {
     public String getLongitude() {
         return longitude;
     }
+
+    public char getLatitudeDirection() {
+        return latitudeDirection;
+    }
+
+    public char getLongtitudeDirection() {
+        return longtitudeDirection;
+    }
+
+    public String localMeanTime(int hours, int minutes, int seconds) {
+        double timeZoneLongtitude = 15 * this.summerTime;
+        double difference = this.longtitudeValue - timeZoneLongtitude;
+        double hoursToChange;
+        double doubleHours = (double) hours;
+        double doubleMinutes = (double) minutes;
+        double doubleSeconds = (double) seconds;
+        int updatedSeconds;
+        int updatedMinutes;
+        int updatedHours;
+
+        if (this.longtitudeDirection == 'W') {
+            hoursToChange = difference / 15;
+            doubleHours = doubleHours - Math.floor(hoursToChange);
+            hoursToChange = hoursToChange * 60; // dla minut
+            doubleMinutes = doubleMinutes - Math.floor(hoursToChange);
+            hoursToChange = hoursToChange - doubleMinutes;
+            hoursToChange = hoursToChange * 60; // dla sekund
+            doubleSeconds = doubleSeconds - Math.round(hoursToChange);
+        } else if (this.longtitudeDirection == 'E') {
+            hoursToChange = difference / 15;
+            doubleHours = doubleHours + Math.floor(hoursToChange);
+            hoursToChange = hoursToChange * 60; // dla minut
+            doubleMinutes = doubleMinutes + Math.floor(hoursToChange);
+            hoursToChange = hoursToChange - doubleMinutes;
+            hoursToChange = hoursToChange * 60; // dla sekund
+            doubleSeconds = doubleSeconds + Math.round(hoursToChange);
+        } else {
+            throw new IllegalArgumentException("Dlugosc moze byc tylko E wschodnia i W zachodnia");
+        }
+
+        if (doubleSeconds < 0) {
+            doubleSeconds = Math.abs(doubleSeconds);
+        } else if (doubleSeconds >= 60) {
+            doubleMinutes = doubleMinutes + doubleSeconds / 60;
+            doubleSeconds = doubleSeconds % 60;
+        }
+
+        if (doubleMinutes < 0) {
+            doubleMinutes = Math.abs(doubleMinutes);
+        } else if (doubleMinutes >= 60) {
+            doubleHours = doubleHours + doubleMinutes / 60;
+            doubleMinutes = doubleMinutes % 60;
+        }
+
+        if (doubleHours < 0) {
+            doubleHours = Math.abs(doubleHours);
+        } else if (doubleHours >= 24) {
+            doubleHours = doubleHours % 24;
+        }
+
+        updatedSeconds = (int) doubleSeconds;
+        updatedMinutes = (int) doubleMinutes;
+        updatedHours = (int) doubleHours;
+
+        return updatedHours + ":" + updatedMinutes + ":" + updatedSeconds;
+    }
+
+
+
 
     @Override
     public String toString() {

@@ -44,8 +44,17 @@ public abstract class Clock {
         this.city = newCity;
     }
 
+    public int getSeconds() {
+        return seconds;
+    }
 
+    public int getHours() {
+        return hours;
+    }
 
+    public int getMinutes() {
+        return minutes;
+    }
 
     @Override
     public String toString() {
