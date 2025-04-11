@@ -1,9 +1,7 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class City {
     private String capital;
@@ -34,13 +32,13 @@ public class City {
 
     public City parseLine(String line) {
         String[] parts = line.split(",");
-            this.capital = parts[0];
-            this.summerTime = Integer.parseInt(parts[1]);
-            this.latitude = parts[2];
-            this.longitude = parts[3];
+        this.capital = parts[0];
+        this.summerTime = Integer.parseInt(parts[1]);
+        this.latitude = parts[2];
+        this.longitude = parts[3];
 
         return new City(capital, summerTime, latitude, longitude);
-     }
+    }
 
     public Map<String, City> parseFile(String path) {
         Map<String, City> cities = new LinkedHashMap<>();
@@ -95,64 +93,85 @@ public class City {
     }
 
     public String localMeanTime(int hours, int minutes, int seconds) {
-        double timeZoneLongtitude = 15 * this.summerTime;
-        double difference = this.longtitudeValue - timeZoneLongtitude;
-        double hoursToChange;
-        double doubleHours = (double) hours;
-        double doubleMinutes = (double) minutes;
-        double doubleSeconds = (double) seconds;
-        int updatedSeconds;
-        int updatedMinutes;
-        int updatedHours;
+        double timeZoneLongitude = 15 * this.summerTime;
+        double difference = 0;
 
-        if (this.longtitudeDirection == 'W') {
-            hoursToChange = difference / 15;
-            doubleHours = doubleHours - Math.floor(hoursToChange);
-            hoursToChange = hoursToChange * 60; // dla minut
-            doubleMinutes = doubleMinutes - Math.floor(hoursToChange);
-            hoursToChange = hoursToChange - doubleMinutes;
-            hoursToChange = hoursToChange * 60; // dla sekund
-            doubleSeconds = doubleSeconds - Math.round(hoursToChange);
-        } else if (this.longtitudeDirection == 'E') {
-            hoursToChange = difference / 15;
-            doubleHours = doubleHours + Math.floor(hoursToChange);
-            hoursToChange = hoursToChange * 60; // dla minut
-            doubleMinutes = doubleMinutes + Math.floor(hoursToChange);
-            hoursToChange = hoursToChange - doubleMinutes;
-            hoursToChange = hoursToChange * 60; // dla sekund
-            doubleSeconds = doubleSeconds + Math.round(hoursToChange);
+        if (this.longtitudeDirection == 'E') {
+            difference = this.longtitudeValue - timeZoneLongitude;
+        } else if (this.longtitudeDirection == 'W') {
+            difference = -this.longtitudeValue - timeZoneLongitude;
         } else {
-            throw new IllegalArgumentException("Dlugosc moze byc tylko E wschodnia i W zachodnia");
+            throw new IllegalArgumentException("Długość może być tylko E (wschodnia) i W (zachodnia)");
         }
 
-        if (doubleSeconds < 0) {
-            doubleSeconds = Math.abs(doubleSeconds);
-        } else if (doubleSeconds >= 60) {
-            doubleMinutes = doubleMinutes + doubleSeconds / 60;
-            doubleSeconds = doubleSeconds % 60;
+        double hoursDifferenceDouble = difference / 15.0;
+
+        int wholeHoursDifference = (int) Math.floor(hoursDifferenceDouble);
+        double fractionalHoursDifference = hoursDifferenceDouble - wholeHoursDifference;
+        int minutesDifference = (int) Math.floor(fractionalHoursDifference * 60);
+        double secondsDifference = (fractionalHoursDifference * 60 - minutesDifference) * 60;
+
+        int updatedHours = hours + wholeHoursDifference;
+        int updatedMinutes = minutes + minutesDifference;
+        int updatedSeconds = seconds + (int) Math.round(secondsDifference);
+
+
+        if (updatedSeconds >= 60) {
+            int extraMinutes = updatedSeconds / 60;
+            updatedMinutes = updatedMinutes + extraMinutes;
+            updatedSeconds = updatedSeconds % 60;
+        } else if (updatedSeconds < 0) {
+            int borrowMinutes = (Math.abs(updatedSeconds) + 59) / 60;
+            updatedMinutes = updatedMinutes - borrowMinutes;
+            updatedSeconds = updatedSeconds + (borrowMinutes * 60);
         }
 
-        if (doubleMinutes < 0) {
-            doubleMinutes = Math.abs(doubleMinutes);
-        } else if (doubleMinutes >= 60) {
-            doubleHours = doubleHours + doubleMinutes / 60;
-            doubleMinutes = doubleMinutes % 60;
+        if (updatedMinutes >= 60) {
+            int extraHours = updatedMinutes / 60;
+            updatedHours = updatedHours + extraHours;
+            updatedMinutes = updatedMinutes % 60;
+        } else if (updatedMinutes < 0) {
+            int borrowHours = (Math.abs(updatedMinutes) + 59) / 60;
+            updatedHours = updatedHours - borrowHours;
+            updatedMinutes = updatedMinutes + (borrowHours * 60);
         }
 
-        if (doubleHours < 0) {
-            doubleHours = Math.abs(doubleHours);
-        } else if (doubleHours >= 24) {
-            doubleHours = doubleHours % 24;
+        while (updatedHours < 0) {
+            updatedHours = updatedHours + 24;
         }
 
-        updatedSeconds = (int) doubleSeconds;
-        updatedMinutes = (int) doubleMinutes;
-        updatedHours = (int) doubleHours;
+        while (updatedHours >= 24) {
+            updatedHours = updatedHours % 24;
+        }
+
 
         return updatedHours + ":" + updatedMinutes + ":" + updatedSeconds;
     }
 
+    public static int worstTimezoneFit(City cityOne, City cityTwo, int hours, int minutes, int seconds) {
+        String localTimeOne = cityOne.localMeanTime(hours, minutes, seconds);
+        String[] parts1 = localTimeOne.split(":");
+        int localHours1 = Integer.parseInt(parts1[0]);
+        int localMinutes1 = Integer.parseInt(parts1[1]);
+        int localSeconds1 = Integer.parseInt(parts1[2]);
 
+        cityTwo.localMeanTime(hours, minutes, seconds);
+        String localTimeTwo = cityTwo.localMeanTime(hours, minutes, seconds);
+        String[] parts2 = localTimeTwo.split(":");
+        int localHours2 = Integer.parseInt(parts2[0]);
+        int localMinutes2 = Integer.parseInt(parts2[1]);
+        int localSeconds2 = Integer.parseInt(parts2[2]);
+
+        int totalSecondsOne = localHours1 * 3600 + localMinutes1 * 60 + localSeconds1;
+        int totalSecondsTwo = localHours2 * 3600 + localMinutes2 * 60 + localSeconds2;
+
+        int totalSecondsTimeZone = hours * 3600 + minutes * 60 + seconds;
+
+        int differenceOne = Math.abs(totalSecondsOne - totalSecondsTimeZone);
+        int differenceTwo = Math.abs(totalSecondsTwo - totalSecondsTimeZone);
+
+        return Integer.compare(differenceTwo, differenceOne);
+    }
 
 
     @Override
