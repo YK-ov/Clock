@@ -40,6 +40,12 @@ public class Main {
         AnalogClock analogClock = new AnalogClock(Kyiv);
         analogClock.toSvg("clock.svg");
 
+
+        LocalTime localTime = LocalTime.now();
+        SecondHand seconds = new SecondHand(0,0, 70, "red", 1);
+        seconds.setTime(localTime);
+
+
     }
 
 }
