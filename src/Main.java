@@ -49,12 +49,11 @@ public class Main {
         AnalogClock analogClock = new AnalogClock(Kyiv, seconds, minutes, hours);
 
 
-        analogClock.setTime(21, 0, 0);
+        analogClock.setTime(18, 31, 2);
         System.out.println(analogClock);
-        //System.out.println(analogClock.getHours());
-        //analogClock.toSvg("clock.svg");
         analogClock.toSvg("clock.svg");
 
+        City.generateAnalogClockSvg(cityList, analogClock);
     }
 
 }

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -171,6 +172,19 @@ public class City {
         int differenceTwo = Math.abs(totalSecondsTwo - totalSecondsTimeZone);
 
         return Integer.compare(differenceTwo, differenceOne);
+    }
+
+    public static void generateAnalogClockSvg(List<City> cities, AnalogClock analogClock) throws IOException {
+        String dirName = analogClock.toString();
+        System.out.println(dirName);
+        File theDir = new File("dirName");
+        if (!theDir.exists()){
+            theDir.mkdirs();
+        }
+        /*for (int i = 0; i < cities.size(); i++) {
+            analogClock.toSvg(cities.get(i).capital);
+        }
+*/
     }
 
 

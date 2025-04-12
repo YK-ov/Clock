@@ -22,7 +22,6 @@ public class AnalogClock extends Clock {
         hands.add(hourHand);
     }
 
-// make a bool method (or gets a bool method as a check depending on what it returns) which returns either one method or anotehr as a check
     public boolean isTimeSet() {
         LocalTime localTime = LocalTime.now();
             if (seconds != localTime.getSecond() && minutes != localTime.getMinute() && hours != localTime.getHour()) {
@@ -32,8 +31,6 @@ public class AnalogClock extends Clock {
                 return false;
             }
         }
-
-
 
     public void toSvg(String filePath) throws IOException {
         LocalTime newLocalTime = LocalTime.of(hours, minutes, seconds);
