@@ -4,7 +4,7 @@ public abstract class ClockHand {
     protected double xStartPosition;
     protected double yStartPosition;
     protected double xEndPosition;
-    protected double yEndPosition; //max length = 50
+    protected double yEndPosition;
     protected double angle;
     protected int length;
 

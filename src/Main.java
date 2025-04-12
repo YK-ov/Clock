@@ -37,18 +37,24 @@ public class Main {
 
         }
 
-        AnalogClock analogClock = new AnalogClock(Kyiv);
-        analogClock.toSvg("clock.svg");
-
-
         LocalTime localTime = LocalTime.now();
-        SecondHand seconds = new SecondHand(0,0, 70, "red", 1);
+        SecondHand seconds = new SecondHand(0,0, 80, "red", 1);
         seconds.setTime(localTime);
-        MinuteHand minutes = new MinuteHand(0,0, 70, "black", 2);
+        MinuteHand minutes = new MinuteHand(0,0, 70, "black", 3);
         minutes.setTime(localTime);
 
-        HourHand hours = new HourHand(0,0, 70, "black", 3);
+        HourHand hours = new HourHand(0,0, 40, "black", 5);
         hours.setTime(localTime);
+
+        AnalogClock analogClock = new AnalogClock(Kyiv, seconds, minutes, hours);
+
+
+        analogClock.setTime(21, 0, 0);
+        System.out.println(analogClock);
+        //System.out.println(analogClock.getHours());
+        //analogClock.toSvg("clock.svg");
+        analogClock.toSvg("clock.svg");
+
     }
 
 }

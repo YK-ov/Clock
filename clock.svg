@@ -6,4 +6,11 @@
     <text x="0" y="80" dy="6">6</text>
     <text x="-80" y="0" dy="4">9</text>
   </g>
+
+
+<line x1="0.0" y1="0.0" x2="0.0" y2="-80.0" stroke="red" stroke-width="1" />
+
+<line x1="0.0" y1="0.0" x2="0.0" y2="-70.0" stroke="black" stroke-width="3" />
+
+<line x1="0.0" y1="0.0" x2="0.0" y2="-40.0" stroke="black" stroke-width="5" transform="rotate(630.0)" />
 </svg>

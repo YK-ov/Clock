@@ -20,7 +20,6 @@ public class HourHand extends ClockHand {
             0.5 jako: 30 stopni kazde 60 minut, stad: 30/60 = 0.5 odnosnie wskazowki godzinowej
                 30.0/3600.0 (rowna sie okolo 0.0083) jako: 30 stopni przez 3600 sekund w jednej godznie (odnosnie wskazowki godzninowej)
                  */
-        System.out.println(angle);
     }
 
 
