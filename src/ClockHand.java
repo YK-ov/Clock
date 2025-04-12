@@ -6,7 +6,7 @@ public abstract class ClockHand {
     protected double xEndPosition;
     protected double yEndPosition; //max length = 50
     protected double angle;
-    protected int radius;
+    protected int length;
 
     public ClockHand(double xStartPosition, double yStartPosition) {
         if (xStartPosition == 0 && yStartPosition == 0) {

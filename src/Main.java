@@ -44,8 +44,11 @@ public class Main {
         LocalTime localTime = LocalTime.now();
         SecondHand seconds = new SecondHand(0,0, 70, "red", 1);
         seconds.setTime(localTime);
+        MinuteHand minutes = new MinuteHand(0,0, 70, "black", 2);
+        minutes.setTime(localTime);
 
-
+        HourHand hours = new HourHand(0,0, 70, "black", 3);
+        hours.setTime(localTime);
     }
 
 }
