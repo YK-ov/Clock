@@ -175,18 +175,19 @@ public class City {
     }
 
     public static void generateAnalogClockSvg(List<City> cities, AnalogClock analogClock) throws IOException {
-        String dirName = analogClock.toString();
-        System.out.println(dirName);
-        File theDir = new File("dirName");
+        String dirNameWindows = analogClock.toString().replaceAll("[^a-zA-Z0-9]", "_"); //dla windows
+        String dirNameLinux = analogClock.toString(); // dla linksu, bo mozna tworzyc pliki z " : "
+        File theDir = new File(dirNameWindows);
         if (!theDir.exists()){
             theDir.mkdirs();
         }
-        /*for (int i = 0; i < cities.size(); i++) {
-            analogClock.toSvg(cities.get(i).capital);
+        for (int i = 0; i < cities.size(); i++) {
+            City city = cities.get(i);
+            analogClock.setCity(city);
+            analogClock.toSvg(dirNameWindows + File.separator +city.capital + ".svg");
         }
-*/
-    }
 
+    }
 
     @Override
     public String toString() {

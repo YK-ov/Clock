@@ -30,9 +30,6 @@ public abstract class Clock {
 
     public void setCity(City newCity) {
         int summerTimeDifference = newCity.getSummerTime() - city.getSummerTime();
-        System.out.println(summerTimeDifference);
-        System.out.println(newCity.getSummerTime());
-        System.out.println(city.getSummerTime());
         this.hours = this.hours + summerTimeDifference;
 
         if (this.hours > 23) {

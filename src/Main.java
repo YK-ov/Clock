@@ -54,6 +54,11 @@ public class Main {
         analogClock.toSvg("clock.svg");
 
         City.generateAnalogClockSvg(cityList, analogClock);
-    }
 
+         AnalogClock analogClockTwo = new AnalogClock(Warsaw, seconds, minutes, hours);
+         analogClockTwo.setCurrentTime();
+         analogClockTwo.toSvg("clockTwo.svg");
+         System.out.println(analogClockTwo);
+         City.generateAnalogClockSvg(cityList, analogClockTwo);
+    }
 }

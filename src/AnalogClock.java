@@ -22,18 +22,9 @@ public class AnalogClock extends Clock {
         hands.add(hourHand);
     }
 
-    public boolean isTimeSet() {
-        LocalTime localTime = LocalTime.now();
-            if (seconds != localTime.getSecond() && minutes != localTime.getMinute() && hours != localTime.getHour()) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
 
     public void toSvg(String filePath) throws IOException {
-        LocalTime newLocalTime = LocalTime.of(hours, minutes, seconds);
+        LocalTime newLocalTime = LocalTime.of(hours, minutes, seconds); //dla rozwiazania bez nadpisywania
         String hoursSvg = "";
         String minutesSvg = "";
         String secondsSvg = "";
@@ -46,23 +37,14 @@ public class AnalogClock extends Clock {
                 "    <text x=\"0\" y=\"80\" dy=\"6\">6</text>\n" +
                 "    <text x=\"-80\" y=\"0\" dy=\"4\">9</text>\n" +
                 "  </g>";
-        if (isTimeSet() == true) {
+
             secondHand.setTime(newLocalTime);
             minuteHand.setTime(newLocalTime);
             hourHand.setTime(newLocalTime);
-            for (int i = 0; i < hands.size(); i++) {
-                hoursSvg = hands.get(0).toSvg();
-                minutesSvg = hands.get(1).toSvg();
-                secondsSvg = hands.get(2).toSvg();
-            }
-        }
-        else {
-            for (int i = 0; i < hands.size(); i++) {
-                hoursSvg = hands.get(0).toSvg();
-                minutesSvg = hands.get(1).toSvg();
-                secondsSvg = hands.get(2).toSvg();
-            }
-        }
+            hoursSvg = hands.get(0).toSvg();
+            minutesSvg = hands.get(1).toSvg();
+            secondsSvg = hands.get(2).toSvg();
+
         String ending = "</svg>";
         BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
         writer.write(beginning);

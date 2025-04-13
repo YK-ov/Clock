@@ -8,9 +8,9 @@
   </g>
 
 
-<line x1="0.0" y1="0.0" x2="16.63" y2="-78.25" stroke="red" stroke-width="1" />
+<line x1="0.0" y1="0.0" x2="0.0" y2="-80.0" stroke="red" stroke-width="1" />
 
-<line x1="0.0" y1="0.0" x2="-7.56" y2="69.59" stroke="black" stroke-width="3" />
+<line x1="0.0" y1="0.0" x2="-21.63" y2="66.57" stroke="black" stroke-width="3" />
 
-<line x1="0.0" y1="0.0" x2="0.0" y2="-40.0" stroke="black" stroke-width="5" transform="rotate(555.5166666666667)" />
+<line x1="0.0" y1="0.0" x2="0.0" y2="-40.0" stroke="black" stroke-width="5" transform="rotate(346.5)" />
 </svg>
